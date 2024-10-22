@@ -1,0 +1,321 @@
+root = true
+# EditorConfig is awesome: http://EditorConfig.org
+
+# top-most EditorConfig file
+
+# Global settings
+[*]
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# Xml project files
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
+indent_style = space
+indent_size = 2
+
+# Xml config files
+[*.{props,targets,ruleset,config,nuspec,resx,vsixmanifest,vsct}]
+indent_style = space
+indent_size = 2
+
+[*.{md,json}]
+indent_style = space
+indent_size = 4
+
+[*.cs]
+indent_style = space
+indent_size = 4
+max_line_length = 130
+
+# New line preferences
+csharp_new_line_before_open_brace = all
+csharp_new_line_before_else = true
+csharp_new_line_before_catch = true
+csharp_new_line_before_finally = true
+csharp_new_line_before_members_in_object_initializers = true
+csharp_new_line_before_members_in_anonymous_types = true
+csharp_new_line_between_query_expression_clauses = true
+
+# Indentation preferences
+csharp_indent_block_contents = true
+csharp_indent_braces = false
+csharp_indent_case_contents = true
+csharp_indent_switch_labels = true
+csharp_indent_labels = one_less_than_current
+
+# avoid this. unless absolutely necessary
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+
+# only use var when it's obvious what the variable type is
+csharp_style_var_for_built_in_types = false:none
+csharp_style_var_when_type_is_apparent = false:none
+csharp_style_var_elsewhere = false:suggestion
+
+# use language keywords instead of BCL types
+dotnet_style_predefined_type_for_locals_parameters_members = true:error
+dotnet_style_predefined_type_for_member_access = true:error
+
+# name all constant fields using PascalCase
+dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols  = constant_fields
+dotnet_naming_rule.constant_fields_should_be_pascal_case.style    = pascal_case_style
+
+dotnet_naming_symbols.constant_fields.applicable_kinds = field
+dotnet_naming_symbols.constant_fields.required_modifiers = const
+
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
+
+# Code style defaults
+csharp_using_directive_placement = outside_namespace:warning
+dotnet_sort_system_directives_first = true
+csharp_preserve_single_line_blocks = true
+csharp_preserve_single_line_statements = false
+
+# Expression-level preferences
+dotnet_style_object_initializer = true:suggestion
+dotnet_style_collection_initializer = true:suggestion
+dotnet_style_explicit_tuple_names = true:suggestion
+dotnet_style_coalesce_expression = true:suggestion
+dotnet_style_null_propagation = true:suggestion
+
+# Expression-bodied members
+csharp_style_expression_bodied_methods = true:none
+csharp_style_expression_bodied_constructors = false:none
+csharp_style_expression_bodied_operators = false:none
+csharp_style_expression_bodied_properties = true:none
+csharp_style_expression_bodied_indexers = true:none
+csharp_style_expression_bodied_accessors = true:none
+
+# Pattern matching
+csharp_style_pattern_matching_over_is_with_cast_check = true:error
+csharp_style_pattern_matching_over_as_with_null_check = true:error
+csharp_style_inlined_variable_declaration = true:error
+
+# Null checking preferences
+csharp_style_throw_expression = true:suggestion
+csharp_style_conditional_delegate_call = true:suggestion
+
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:error
+dotnet_style_readonly_field = true:error
+
+# Space preferences
+csharp_space_after_cast = false
+csharp_space_after_colon_in_inheritance_clause = true
+csharp_space_after_comma = true
+csharp_space_after_dot = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_around_declaration_statements = do_not_ignore
+csharp_space_before_colon_in_inheritance_clause = true
+csharp_space_before_comma = false
+csharp_space_before_dot = false
+csharp_space_before_open_square_brackets = false
+csharp_space_before_semicolon_in_for_statement = false
+csharp_space_between_attribute_sections = false
+csharp_space_between_empty_square_brackets = false
+csharp_space_between_method_call_empty_parameter_list_parentheses = false
+csharp_space_between_method_call_name_and_opening_parenthesis = false
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+csharp_space_between_parentheses = false
+csharp_space_between_square_brackets = false
+
+resharper_blank_lines_after_multiline_statements = 1
+
+# Purpose: Don't put elements of an array on new lines, unless the length exceeds the maximum line length.
+resharper_wrap_array_initializer_style = chop_always
+
+# Purpose: An item within a C# enumeration is missing an Xml documentation header
+# Reason: Some enums are self-explanatory
+dotnet_diagnostic.ca1062.severity = suggestion
+
+# Purpose: Specify StringComparison
+# Reason: Ignored since we force invariant culture on the csproj level
+dotnet_diagnostic.ca1307.severity = none
+
+# Purpose: Specify StringComparison
+# Reason: Specify StringComparison for methods that don't use Ordinal by default
+dotnet_diagnostic.ca1310.severity = error
+
+# Purpose: 'X' is an internal class that is apparently never instantiated. If so, remove the code from the assembly
+# Reason: The class is used, but not directly through the constructor, which is fine. 
+dotnet_diagnostic.ca1812.severity = none
+
+# Purpose: Properties should not return arrays
+# Reason: Although it's good advice, we should decide this case-by-case
+dotnet_diagnostic.ca1819.severity = suggestion
+
+# Purpose: For improved performance, use the LoggerMessage delegates instead of calling 'LoggerExtensions.LogInformation(ILogger, string?, params object?[])'
+# Reason: For now, we prefer to use explicit checks using IsEnabled
+dotnet_diagnostic.ca1848.severity = none
+
+# Purpose: Use Task.ConfigureAwait(false) if the current SynchronizationContext is not needed
+# Reason: Not relevant for .NET Core web applications.
+dotnet_diagnostic.ca2007.severity = none
+
+# Purpose: # SA0001: XmlCommentAnalysisDisabled
+# Reason: We don't want to force this
+dotnet_diagnostic.sa0001.severity = none
+
+# Purpose: Use string.Empty for empty string
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1122.severity = none
+
+# Purpose: Prefix local calls with this
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1101.severity = none
+
+# Purpose: A enum should not follow a class
+# Reason: We don't want to force this for a content-only package
+dotnet_diagnostic.sa1201.severity = none
+
+# Purpose: public' members should come before 'private' members
+# Reason: We keep members in order of execution
+dotnet_diagnostic.SA1202.severity = none
+
+# Purpose: Static members should appear before non-static members
+# Reason: We keep members in order of execution
+dotnet_diagnostic.SA1204.severity = none
+
+# Purpose: Code should not contain multiple blank lines in a row
+# Reason: No need to fail a build on that
+dotnet_diagnostic.sa1507.severity = none
+
+# Purpose: A single-line comment within C# code is not preceded by a blank line.
+# Reason: Unnecessarily strict
+dotnet_diagnostic.sa1515.severity = none
+
+# Purpose: File is required to end with a single newline character 
+# Reason: We don't case
+dotnet_diagnostic.sa1518.severity = none
+
+# Purpose: Element parameters should be documented
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1611.severity = none
+
+# Purpose: Element return value should be documented
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1615.severity = none
+
+# Purpose: Generic type parameters should be documented
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1618.severity = none
+
+# Purpose: Element return value should be documented
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1622.severity = none
+
+# Purpose: The property's documentation summary text should begin with: 'Gets or sets'
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1623.severity = none
+
+# Purpose: Documentation text should end with a period
+# Reason: We're not building a library
+dotnet_diagnostic.sa1629.severity = none
+
+# Purpose: The file header is missing or not located at the top of the file
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1633.severity = none
+
+# Purpose: File name should match first type name
+# Reason: To keep the content-only package simple, we keep everything together 
+dotnet_diagnostic.sa1649.severity = none
+
+# Purpose: Elements should be documented
+# Reason: We don't want to force documentation for all elements
+dotnet_diagnostic.sa1600.severity = suggestion
+
+# Purpose: Partial elements should be documented
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1601.severity = none
+
+# Purpose: Closing parenthesis should be on line of last parameter
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1111.severity = none
+
+# Purpose: The parameters should begin on the line after the declaration, whenever the parameter span across multiple lines
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1116.severity = none
+
+# Purpose: Use an overload of 'Contains' that has a StringComparison parameter
+# Reason: Ignored since we force invariant culture on the csproj level
+dotnet_diagnostic.ma0001.severity = none
+
+# Purpose: MA0002 : Use an overload that has a IEqualityComparer<string> or IComparer<string> parameter
+# Reason: Ignored since we force invariant culture on the csproj level
+dotnet_diagnostic.ma0002.severity = none
+
+# Purpose: Use Task.ConfigureAwait(false) if the current SynchronizationContext is not needed
+# Reason: Not relevant for .NET Core web applications.
+dotnet_diagnostic.ma0004.severity = none
+
+# Purpose: Use string.Equals instead of NotEquals operator
+# Reason: Ignored since we force invariant culture on the csproj level
+dotnet_diagnostic.ma0006.severity = none
+
+# Purpose: MA0011 : Use an overload of 'ToString' that has a 'System.IFormatProvider' parameter
+# Reason: Ignored since we force invariant culture on the csproj level
+dotnet_diagnostic.ma0011.severity = none
+
+# Purpose: Fix TODO comment
+# Reason: We don't want to force this
+dotnet_diagnostic.ma0026.severity = suggestion
+
+# Purpose: File name must match type name. 
+# Reason: Too many purposeful violations.
+dotnet_diagnostic.MA0048.severity = none
+
+# Purpose: Closing parenthesis should not be preceded by a space
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1009.severity = none
+
+# Purpose: File may only contain a single type
+# Reason: We keep everything together in this project.
+dotnet_diagnostic.SA1402.severity = none
+
+# Purpose: Use trailing comma in multi-line initialize
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1413.severity = none
+
+# Purpose: Method contains 8 statements, which exceeds the maximum of 7 statements
+# Reason: We don't want to force this
+dotnet_diagnostic.av1500.severity = none
+
+# Purpose: Loop statement contains nested loop
+# Reason: We don't want to completely prevent this. 
+dotnet_diagnostic.av1532.severity = suggestion
+
+# Purpose: AV1555 : Parameter in the call is invoked with a named argument
+# Reason: False positives. See https://github.com/bkoelman/CSharpGuidelinesAnalyzer/issues/145
+dotnet_diagnostic.av1555.severity = none
+
+# Purpose: Argument for parameter 'param' in method calls nested method
+# Reason: Not a real issue in Rider anymore
+dotnet_diagnostic.av1580.severity = none
+
+# Purpose: AV1706 : Parameter 'p' should have a more descriptive name
+# Reason: Also complains about lambda parameters. See https://github.com/bkoelman/CSharpGuidelinesAnalyzer/issues/147
+dotnet_diagnostic.av1706.severity = none
+
+# Purpose: Property 'Username' contains the name of its containing type 'User'. We should make that decision case-by-case
+# Reason: We don't want to judge this case-by-case
+dotnet_diagnostic.av1710.severity = none
+
+# Purpose: Error AV1755 : Name of async method should end with Async or TaskAsync
+# Reason: We don't want to force this
+dotnet_diagnostic.av1755.severity = none
+
+# Purpose: Missing XML comment for internally visible type or member
+# Reason: We don't want to force this
+dotnet_diagnostic.av2305.severity = suggestion
+
+# Purpose: Pass -warnaserror to the compiler or add <TreatWarningsAsErrors>True</TreatWarningsAsErrors> to your project
+# Reason: It is already enabled, but during a Sonar scan, the scanner switches back causing unnecessary warnings
+dotnet_diagnostic.av2210.severity = none
