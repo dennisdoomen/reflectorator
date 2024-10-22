@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <!-- 👇 This is the ID of the package in NuGet -->
+    <id>Reflectify</id>
+    <version>$version$</version>
+    <!-- 👇 Indicates the package is only used at build time, not deploy time -->
+    <developmentDependency>true</developmentDependency>
+    <authors>Dennis Doomen</authors>
+    <license type="expression">MIT</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectUrl>https://github.com/dennisdoomen/Reflectify</projectUrl>
+    <description>A source-only package to help get metadata from .NET types</description>
+    <tags>source reflection</tags>
+  </metadata>
+  <files>
+    <file src="*.cs" target="contentFiles/cs/net6.0/Reflectify/"/>
+    <file src="*.cs" target="contentFiles/cs/net4.7/Reflectify/"/>
+    <file src="*.cs" target="contentFiles/cs/netstandard2.0/Reflectify/"/>
+    <file src="*.cs" target="contentFiles/cs/netstandard2.1/Reflectify/"/>
+    <!-- 👇 Hide content files from Visual Studio solution explorer  -->
+    <file src="Reflectify.props" target="build/Reflectify.props" />
+  </files>
+</package>
