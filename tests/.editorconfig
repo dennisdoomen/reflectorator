@@ -1,0 +1,42 @@
+[*.cs]
+
+# Purpose: Do not nest type GetProperties. 
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1034.severity = none
+
+# Purpose: Type is a static holder type but is neither static nor NotInheritable
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1052.severity = none
+
+# Purpose: Remove the underscores from member name
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1707.severity = none
+
+# Purpose: Type 'SuperClass' can be sealed
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1852.severity = none
+
+# Purpose: Elements must be documented
+# Reason: Not needed for tests
+dotnet_diagnostic.SA1600.severity = none
+
+# Purpose: Field should be private
+# Reason: Not needed for tests
+dotnet_diagnostic.SA1401.severity = none
+
+# Purpose: Make class static
+# Reason: Not needed for tests
+dotnet_diagnostic.RCS1102.severity = none
+
+# Purpose: Type contains the word 'and'
+# Reason: Not needed for tests
+dotnet_diagnostic.AV1000.severity = none
+
+# Purpose: Type hides inherited member
+# Reason: Not needed for tests
+dotnet_diagnostic.AV1010.severity = none
+
+
+
+
+

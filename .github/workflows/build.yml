@@ -1,0 +1,71 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: "Build, Test, Analyze and Publish"
+    runs-on: windows-latest
+
+    env:
+      DOTNET_NOLOGO: false
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET SDKs
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          3.0.x
+          6.0.x
+
+    - name: Run NUKE
+      run: ./build.ps1
+      env:
+        NuGetApiKey: ${{ secrets.NUGETAPIKEY }}
+
+    - name: Check for 'lcov.info' existence
+      id: check_files
+      uses: andstor/file-existence-action@v3
+      with:
+        files: "TestResults/reports/lcov.info"
+
+    - name: coveralls
+      uses: coverallsapp/github-action@v2
+      if: steps.check_files.outputs.files_exists == 'true'
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        file: TestResults/reports/lcov.info
+
+    - name: Upload artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-artifacts
+        path: |
+          ./Artifacts/*
+          ./TestResults/*.trx
+
+  publish-test-results:
+    name: "Publish Tests Results"
+    needs: [ build ]
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+    if: always()
+
+    steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v2
+      with:
+        comment_mode: always
+        files: "artifacts/**/**/*.trx"
