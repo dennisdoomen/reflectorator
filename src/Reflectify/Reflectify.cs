@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace Reflectify;
 
-public static class TypeExtensions
+internal static class TypeExtensions
 {
     private static readonly ConcurrentDictionary<(Type Type, MemberKind Kind), Reflector> ReflectorCache = new();
 
@@ -55,7 +55,7 @@ public static class TypeExtensions
     }
 }
 
-public static class PropertyInfoExtensions
+internal static class PropertyInfoExtensions
 {
     /// <summary>
     /// Returns <c>true</c> if the property is an indexer, or <c>false</c> otherwise.
@@ -83,8 +83,9 @@ public static class PropertyInfoExtensions
 /// Defines the kinds of members you want to get when querying for the fields and properties of a type.
 /// </summary>
 [Flags]
-public enum MemberKind
+internal enum MemberKind
 {
+    None,
     Public = 1,
     Internal = 2,
     ExplicitlyImplemented = 4,

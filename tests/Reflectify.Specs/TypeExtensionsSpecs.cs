@@ -1,6 +1,4 @@
 ﻿using System.Globalization;
-using System.Linq;
-using System.Reflection;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Xunit;
@@ -26,7 +24,8 @@ public class TypeExtensionsSpecs
                 new { Name = "InterfaceProperty", PropertyType = typeof(string) },
                 new
                 {
-                    Name = $"{typeof(IInterfaceWithSingleProperty).FullName!.Replace("+", ".")}.ExplicitlyImplementedProperty",
+                    Name =
+                        $"{typeof(IInterfaceWithSingleProperty).FullName!.Replace("+", ".")}.ExplicitlyImplementedProperty",
                     PropertyType = typeof(string)
                 },
 #if NETCOREAPP3_0_OR_GREATER
@@ -95,11 +94,7 @@ public class TypeExtensionsSpecs
             // Assert
             properties.Should().BeEquivalentTo(new[]
             {
-                new
-                {
-                    Name = "ExplicitlyImplementedProperty",
-                    PropertyType = typeof(int)
-                }
+                new { Name = "ExplicitlyImplementedProperty", PropertyType = typeof(int) }
             });
         }
 
@@ -143,6 +138,16 @@ public class TypeExtensionsSpecs
             {
                 new { Name = "Foo", PropertyType = typeof(object) }
             });
+        }
+
+        [Fact]
+        public void Supports_returning_nothing_if_asked_for()
+        {
+            // Act
+            var properties = typeof(ClassWithIndexer).GetProperties(MemberKind.None);
+
+            // Assert
+            properties.Should().BeEmpty();
         }
     }
 
@@ -189,6 +194,16 @@ public class TypeExtensionsSpecs
                 new { Name = "InternalField", FieldType = typeof(string) },
                 new { Name = "ProtectedInternalField", FieldType = typeof(string) }
             });
+        }
+
+        [Fact]
+        public void Supports_returning_nothing_if_asked_for()
+        {
+            // Act
+            var properties = typeof(ClassWithIndexer).GetFields(MemberKind.None);
+
+            // Assert
+            properties.Should().BeEmpty();
         }
     }
 

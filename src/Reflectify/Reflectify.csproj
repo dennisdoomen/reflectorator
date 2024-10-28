@@ -10,7 +10,13 @@
         <DefineConstants>REFLECTIFY_COMPILE</DefineConstants>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+  <ItemGroup Label="Internals visible to">
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Reflectify.Specs</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
       <DocumentationFile>bin\Debug\Reflectify.xml</DocumentationFile>
     </PropertyGroup>
 
