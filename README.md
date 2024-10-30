@@ -12,13 +12,36 @@
 [![open issues](https://img.shields.io/github/issues/dennisdoomen/reflectify)](https://github.com/dennisdoomen/reflectify/issues)
 ![](https://img.shields.io/badge/release%20strategy-githubflow-orange.svg)
 
-> [!TIP]
-> If you like this package, consider sponsoring me through [Github Sponsors](https://github.com/sponsors/dennisdoomen)
-
 ## What's this about?
 
 Reflectify offers a bunch of extension methods to provide information such as the properties or fields a type exposes and metadata about those members. It supports all major .NET versions and even understands explicltly implemented properties or properties coming from default interface implementations, a C# 8 feature.
 
 ## What's so special about that?
 
-Nothing really, but it offers that functionality through a content-only NuGet package. In other words, you can use this package in your own packages, without the need to tie yourself to the Reflectify package.
+Nothing really, but it offers that functionality through a content-only NuGet package. In other words, you can use this package in your own packages, without the need to tie yourself to the Reflectify package. Oh, and it's used by [an open-source project](https://fluentassertions.com/) with over 400 million downloads.
+
+## How do I use it?
+
+Simple, to get the properties of a type, add the `Reflectify` NuGet package and use
+
+```csharp
+using Reflectify;
+
+var properties = typeof(SuperClass).GetProperties(
+    MemberKind.Public | MemberKind.ExplicitlyImplemented | MemberKind.DefaultInterfaceProperties);
+```
+
+You can take any of the options `Public`, `Internal`, `ExplictlyImplemented` and `DefaultInterfaceProperties`.
+
+If you need the fields, use `GetFields` (which obviously cannot be explicitly implemented, nor be part of interfaces), and if you need the members, use `GetMembers`.
+
+To get more metadata from a `PropertyInfo`, you can use extensions methods like:
+
+* `IsExplictlyImplemented`
+* `IsIndexer`
+
+More will follow in time.
+
+> [!TIP]
+> If you like this package, consider sponsoring me through [Github Sponsors](https://github.com/sponsors/dennisdoomen)
+
