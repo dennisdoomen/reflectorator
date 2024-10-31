@@ -12,6 +12,14 @@ dotnet_diagnostic.CA1052.severity = none
 # Reason: We don't care about this in tests
 dotnet_diagnostic.CA1707.severity = none
 
+# Purpose: Identifiers should not have incorrect suffix
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1711.severity = none
+
+# Purpose: Member 'Method' does not access instance data and can be marked as stati
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1822.severity = none
+
 # Purpose: Type 'SuperClass' can be sealed
 # Reason: We don't care about this in tests
 dotnet_diagnostic.CA1852.severity = none
@@ -36,7 +44,10 @@ dotnet_diagnostic.AV1000.severity = none
 # Reason: Not needed for tests
 dotnet_diagnostic.AV1010.severity = none
 
+# Purpose: Parameter 'flag' is of type 'bool
+# Reason: Not needed for tests
+dotnet_diagnostic.AV1564.severity = none
 
-
-
-
+# Purpose: Class is never instantiated (non-private accessibility)
+# Reason: We don't instantiate test classes directly
+resharper_class_never_instantiated_global_highlighting=none

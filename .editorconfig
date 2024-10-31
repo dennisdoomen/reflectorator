@@ -248,6 +248,10 @@ dotnet_diagnostic.sa1111.severity = none
 # Reason: We don't want to force this
 dotnet_diagnostic.sa1116.severity = none
 
+# Purpose: The parameters should all be placed on the same line or each parameter should be placed on its own lin
+# Reason: We don't want to force this
+dotnet_diagnostic.sa1117.severity = none
+
 # Purpose: Use an overload of 'Contains' that has a StringComparison parameter
 # Reason: Ignored since we force invariant culture on the csproj level
 dotnet_diagnostic.ma0001.severity = none
@@ -296,6 +300,10 @@ dotnet_diagnostic.sa1413.severity = none
 # Reason: We don't want to force this
 dotnet_diagnostic.av1130.severity = none
 
+# Purpose: A property, method or local function should do only one thing
+# Reason: We don't want to force this
+dotnet_diagnostic.av1115.severity = suggestion
+
 # Purpose: Method contains 8 statements, which exceeds the maximum of 7 statements
 # Reason: We don't want to force this
 dotnet_diagnostic.av1500.severity = none
@@ -304,9 +312,13 @@ dotnet_diagnostic.av1500.severity = none
 # Reason: We don't want to completely prevent this. 
 dotnet_diagnostic.av1532.severity = suggestion
 
-# Purpose: AV1555 : Parameter in the call is invoked with a named argument
-# Reason: False positives. See https://github.com/bkoelman/CSharpGuidelinesAnalyzer/issues/145
-dotnet_diagnostic.av1555.severity = none
+# Purpose: Call the more overloaded method from other overloads
+# Reason: We don't want to force this 
+dotnet_diagnostic.av1551.severity = none
+
+# Purpose: Argument for parameter 'param' in method calls nested method
+# Reason: Not a real issue in Rider anymore
+dotnet_diagnostic.av1580.severity = none
 
 # Purpose: Argument for parameter 'param' in method calls nested method
 # Reason: Not a real issue in Rider anymore
