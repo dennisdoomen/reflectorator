@@ -1,9 +1,7 @@
 using System;
 using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -12,10 +10,6 @@ using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
-using YamlDotNet.Serialization;
-using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Serilog.Log;
@@ -27,8 +21,7 @@ class Build : NukeBuild
     ///   - JetBrains Rider            https://nuke.build/rider
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
-
-    public static int Main () => Execute<Build>(x => x.Default);
+    public static int Main() => Execute<Build>(x => x.Default);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -41,15 +34,11 @@ class Build : NukeBuild
 
     string PullRequestBase => GitHubActions?.BaseRef;
 
-    [Parameter("The key to push to Nuget")]
-    [Secret]
-    readonly string NuGetApiKey;
+    [Parameter("The key to push to Nuget")][Secret] readonly string NuGetApiKey;
 
-    [Solution(GenerateProjects = true)]
-    readonly Solution Solution;
+    [Solution(GenerateProjects = true)] readonly Solution Solution;
 
-    [GitVersion(Framework = "net6.0", NoFetch = true)]
-    readonly GitVersion GitVersion;
+    [GitVersion(Framework = "net6.0", NoFetch = true)] readonly GitVersion GitVersion;
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "Artifacts";
 
@@ -67,7 +56,10 @@ class Build : NukeBuild
                     "Branch spec {branchspec} is a pull request. Adding build number {buildnumber}",
                     BranchSpec, BuildNumber);
 
-                SemVer = string.Join('.', GitVersion.SemVer.Split('.').Take(3).Union(new[] { BuildNumber }));
+                SemVer = string.Join('.', GitVersion.SemVer.Split('.').Take(3).Union(new[]
+                {
+                    BuildNumber
+                }));
             }
 
             Information("SemVer = {semver}", SemVer);
@@ -113,9 +105,9 @@ class Build : NukeBuild
                 .SetResultsDirectory(TestResultsDirectory)
                 .SetProjectFile(Solution.Reflectify_Specs)
                 .CombineWith(Solution.Reflectify_Specs.GetTargetFrameworks(),
-                        (ss, framework) => ss
-                            .SetFramework(framework)
-                            .AddLoggers($"trx;LogFileName={framework}.trx")
+                    (ss, framework) => ss
+                        .SetFramework(framework)
+                        .AddLoggers($"trx;LogFileName={framework}.trx")
                 ));
         });
 
