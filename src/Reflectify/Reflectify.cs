@@ -457,7 +457,7 @@ internal static class TypeMemberExtensions
     }
 }
 
-public static class TypeExtensions
+internal static class TypeExtensions
 {
     /// <summary>
     /// If the type provided is a nullable type, gets the underlying type. Returns the type itself otherwise.
@@ -501,7 +501,7 @@ internal static class MemberInfoExtensions
     }
 }
 
-public static class PropertyInfoExtensions
+internal static class PropertyInfoExtensions
 {
     /// <summary>
     /// Returns <c>true</c> if the property is an indexer, or <c>false</c> otherwise.
