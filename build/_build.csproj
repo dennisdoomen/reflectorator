@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nuke.Common" Version="8.1.2" />
+    <PackageReference Include="Nuke.Common" Version="8.1.4" />
     <PackageReference Include="Nuke.Components" Version="8.1.2" />
     <PackageDownload Include="ReportGenerator" Version="[5.2.0]" />
     <PackageDownload Include="GitVersion.Tool" Version="[6.0.2]" />
