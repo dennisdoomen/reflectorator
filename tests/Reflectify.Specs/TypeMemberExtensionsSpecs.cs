@@ -11,7 +11,7 @@ public class TypeMemberExtensionsSpecs
     public class GetPropertiesAndFields
     {
         [Fact]
-        public void Can_get_all_public_explicit_and_default_interface_properties()
+        public void Can_get_all_public_explicit_and_default_instance_interface_properties()
         {
             // Act
             var properties = typeof(SuperClass).GetProperties(
@@ -23,7 +23,6 @@ public class TypeMemberExtensionsSpecs
                 new { Name = "NormalProperty", PropertyType = typeof(string) },
                 new { Name = "NewProperty", PropertyType = typeof(int) },
                 new { Name = "InterfaceProperty", PropertyType = typeof(string) },
-                new { Name = "StaticProperty", PropertyType = typeof(bool) },
                 new
                 {
                     Name =
@@ -34,6 +33,19 @@ public class TypeMemberExtensionsSpecs
                 new { Name = "DefaultProperty", PropertyType = typeof(string) }
 #endif
             });
+        }
+
+        [Fact]
+        public void Can_get_all_public_static_properties()
+        {
+            // Act
+            var properties = typeof(SuperClass).GetProperties(
+                MemberKind.Public | MemberKind.Static);
+
+            // Assert
+            properties.Should().BeEquivalentTo([
+                new { Name = "StaticProperty", PropertyType = typeof(bool) }
+            ]);
         }
 
         [Fact]
@@ -64,7 +76,6 @@ public class TypeMemberExtensionsSpecs
             {
                 new { Name = "NormalProperty", PropertyType = typeof(string) },
                 new { Name = "NewProperty", PropertyType = typeof(int) },
-                new { Name = "StaticProperty", PropertyType = typeof(bool) },
                 new { Name = "InterfaceProperty", PropertyType = typeof(string) }
             });
         }
@@ -217,7 +228,6 @@ public class TypeMemberExtensionsSpecs
                 new { Name = "NormalProperty" },
                 new { Name = "NewProperty" },
                 new { Name = "InterfaceProperty" },
-                new { Name = "StaticProperty" },
                 new { Name = "NormalField" },
             ]);
         }
@@ -394,7 +404,7 @@ public class TypeMemberExtensionsSpecs
     public class FindField
     {
         [Fact]
-        public void Can_find_a_public_field()
+        public void Can_find_a_public_instance_field()
         {
             // Act
             var field = typeof(SuperClass).FindField("NormalField", MemberKind.Public);
@@ -409,10 +419,32 @@ public class TypeMemberExtensionsSpecs
         public void Cannot_find_a_field_if_it_does_not_exist()
         {
             // Act
-            var field = typeof(SuperClass).FindField("NonExistingProperty", MemberKind.Public);
+            var field = typeof(SuperClass).FindField("NonExistingField", MemberKind.Public);
 
             // Assert
             field.Should().BeNull();
+        }
+
+        [Fact]
+        public void Cannot_find_a_static_field_if_you_dont_ask_for_it()
+        {
+            // Act
+            var field = typeof(SuperClass).FindField("StaticField", MemberKind.Public);
+
+            // Assert
+            field.Should().BeNull();
+        }
+
+        [Fact]
+        public void Can_find_a_static_field_if_you_ask_for_it()
+        {
+            // Act
+            var field = typeof(SuperClass).FindField("StaticField", MemberKind.Public | MemberKind.Static);
+
+            // Assert
+            field.Should().NotBeNull();
+            field.Name.Should().Be("StaticField");
+            field.FieldType.Should().Be<bool>();
         }
 
         [Theory]

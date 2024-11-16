@@ -31,7 +31,7 @@ var properties = typeof(SuperClass).GetProperties(
     MemberKind.Public | MemberKind.ExplicitlyImplemented | MemberKind.DefaultInterfaceProperties);
 ```
 
-You can take any of the options `Public`, `Internal`, `ExplictlyImplemented` and `DefaultInterfaceProperties`.
+You can take any of the options `Public`, `Internal`, `Static`, `ExplictlyImplemented` and `DefaultInterfaceProperties`.
 
 If you need the fields, use `GetFields` (which obviously cannot be explicitly implemented, nor be part of interfaces), and if you need the members, use `GetMembers`. You can also request individual members by name, like `GetProperty("Name", MemberKind.Public)` or `GetField("Name", MemberKind.Internal)`.
 
