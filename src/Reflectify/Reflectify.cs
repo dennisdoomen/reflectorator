@@ -535,7 +535,8 @@ internal enum MemberKind
     Public = 1,
     Internal = 2,
     ExplicitlyImplemented = 4,
-    DefaultInterfaceProperties = 8
+    DefaultInterfaceProperties = 8,
+    Static = 16
 }
 
 internal static class MemberKindExtensions
@@ -564,37 +565,38 @@ internal static class MemberKindExtensions
 internal sealed class Reflector
 {
     private readonly HashSet<string> collectedPropertyNames = new();
-    private readonly HashSet<string> collectedFields = new();
-    private readonly List<FieldInfo> fields = new();
-    private List<PropertyInfo> properties = new();
+    private readonly HashSet<string> collectedFieldNames = new();
+    private readonly List<FieldInfo> selectedFields = new();
+    private List<PropertyInfo> selectedProperties = new();
 
     public Reflector(Type typeToReflect, MemberKind kind)
     {
         LoadProperties(typeToReflect, kind);
         LoadFields(typeToReflect, kind);
 
-        Members = properties.Concat<MemberInfo>(fields).ToArray();
+        Members = selectedProperties.Concat<MemberInfo>(selectedFields).ToArray();
     }
 
     private void LoadProperties(Type typeToReflect, MemberKind kind)
     {
         while (typeToReflect != null && typeToReflect != typeof(object))
         {
-            var allProperties = typeToReflect.GetProperties(
-                BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public |
-                BindingFlags.NonPublic);
+            BindingFlags flags = BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic;
+            flags |= kind.HasFlag(MemberKind.Static) ? BindingFlags.Static : BindingFlags.Instance;
+
+            var allProperties = typeToReflect.GetProperties(flags);
 
             AddNormalProperties(kind, allProperties);
 
             AddExplicitlyImplementedProperties(kind, allProperties);
 
-            AddInterfaceProperties(typeToReflect, kind);
+            AddInterfaceProperties(typeToReflect, kind, flags);
 
             // Move to the base type
             typeToReflect = typeToReflect.BaseType;
         }
 
-        properties = properties.Where(x => !x.IsIndexer()).ToList();
+        selectedProperties = selectedProperties.Where(x => !x.IsIndexer()).ToList();
     }
 
     private void AddNormalProperties(MemberKind kind, PropertyInfo[] allProperties)
@@ -607,7 +609,7 @@ internal sealed class Reflector
                 if (!collectedPropertyNames.Contains(property.Name) && !property.IsExplicitlyImplemented() &&
                     HasVisibility(kind, property))
                 {
-                    properties.Add(property);
+                    selectedProperties.Add(property);
                     collectedPropertyNames.Add(property.Name);
                 }
             }
@@ -633,7 +635,7 @@ internal sealed class Reflector
 
                     if (!collectedPropertyNames.Contains(name))
                     {
-                        properties.Add(p);
+                        selectedProperties.Add(p);
                         collectedPropertyNames.Add(name);
                     }
                 }
@@ -641,21 +643,20 @@ internal sealed class Reflector
         }
     }
 
-    private void AddInterfaceProperties(Type typeToReflect, MemberKind kind)
+    private void AddInterfaceProperties(Type typeToReflect, MemberKind kind, BindingFlags flags)
     {
         if (kind.HasFlag(MemberKind.DefaultInterfaceProperties) || typeToReflect.IsInterface)
         {
-            // Add explicitly implemented interface properties (not included above)
             var interfaces = typeToReflect.GetInterfaces();
 
             foreach (var iface in interfaces)
             {
-                foreach (var prop in iface.GetProperties())
+                foreach (var prop in iface.GetProperties(flags))
                 {
                     if (!collectedPropertyNames.Contains(prop.Name) &&
                         (!prop.GetMethod.IsAbstract || typeToReflect.IsInterface))
                     {
-                        properties.Add(prop);
+                        selectedProperties.Add(prop);
                         collectedPropertyNames.Add(prop.Name);
                     }
                 }
@@ -667,15 +668,17 @@ internal sealed class Reflector
     {
         while (typeToReflect != null && typeToReflect != typeof(object))
         {
-            var files = typeToReflect.GetFields(
-                BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic);
+            BindingFlags flags = BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.NonPublic;
+            flags |= kind.HasFlag(MemberKind.Static) ? BindingFlags.Static : BindingFlags.Instance;
+
+            var files = typeToReflect.GetFields(flags);
 
             foreach (var field in files)
             {
-                if (!collectedFields.Contains(field.Name) && HasVisibility(kind, field))
+                if (!collectedFieldNames.Contains(field.Name) && HasVisibility(kind, field))
                 {
-                    fields.Add(field);
-                    collectedFields.Add(field.Name);
+                    selectedFields.Add(field);
+                    collectedFieldNames.Add(field.Name);
                 }
             }
 
@@ -692,7 +695,7 @@ internal sealed class Reflector
 
     public MemberInfo[] Members { get; }
 
-    public PropertyInfo[] Properties => properties.ToArray();
+    public PropertyInfo[] Properties => selectedProperties.ToArray();
 
-    public FieldInfo[] Fields => fields.ToArray();
+    public FieldInfo[] Fields => selectedFields.ToArray();
 }
