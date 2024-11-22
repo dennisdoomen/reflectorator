@@ -142,6 +142,19 @@ public class TypeMemberExtensionsSpecs
         }
 
         [Fact]
+        public void Can_get_write_only_properties()
+        {
+            // Act
+            var properties = typeof(ClassImplementingSetterOnlyInterface)
+                .GetProperties(MemberKind.Public | MemberKind.DefaultInterfaceProperties | MemberKind.ExplicitlyImplemented);
+
+            // Assert
+            properties.Should().BeEquivalentTo([
+                new { Name = "WriteOnlyProperty", PropertyType = typeof(string) }
+            ]);
+        }
+
+        [Fact]
         public void Will_ignore_indexers()
         {
             // Act
@@ -702,7 +715,6 @@ public class TypeMemberExtensionsSpecs
             var convertor = typeof(ClassWithConversionOperators)
                 .FindExplicitConversionOperator(typeof(ClassWithConversionOperators), typeof(int));
 
-
             // Assert
             convertor.Should().NotBeNull();
             convertor.ReturnType.Should().Be<int>();
@@ -725,7 +737,6 @@ public class TypeMemberExtensionsSpecs
             // Act
             var convertor = typeof(ClassWithConversionOperators)
                 .FindImplicitConversionOperator(typeof(ClassWithConversionOperators), typeof(string));
-
 
             // Assert
             convertor.Should().NotBeNull();
@@ -809,6 +820,16 @@ public class TypeMemberExtensionsSpecs
     {
         [UsedImplicitly]
         string ExplicitlyImplementedProperty { get; set; }
+    }
+
+    private class ClassImplementingSetterOnlyInterface : IWithSetterOnlyProperty
+    {
+        public string WriteOnlyProperty { private get; set; }
+    }
+
+    private interface IWithSetterOnlyProperty
+    {
+        string WriteOnlyProperty { set; }
     }
 
     private sealed class ClassWithIndexer
