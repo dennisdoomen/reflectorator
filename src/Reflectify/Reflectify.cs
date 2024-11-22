@@ -647,9 +647,8 @@ internal sealed class Reflector
 
     private static bool HasVisibility(MemberKind kind, PropertyInfo prop)
     {
-        return (kind.HasFlag(MemberKind.Public) && prop.GetMethod?.IsPublic is true) ||
-               (kind.HasFlag(MemberKind.Internal) &&
-                (prop.GetMethod?.IsAssembly is true || prop.GetMethod?.IsFamilyOrAssembly is true));
+        return (kind.HasFlag(MemberKind.Public) && prop.IsPublic()) ||
+               (kind.HasFlag(MemberKind.Internal) && prop.IsInternal());
     }
 
     private void AddExplicitlyImplementedProperties(MemberKind kind, PropertyInfo[] allProperties)
@@ -678,12 +677,12 @@ internal sealed class Reflector
         {
             var interfaces = typeToReflect.GetInterfaces();
 
-            foreach (var iface in interfaces)
+            foreach (var interfaceType in interfaces)
             {
-                foreach (var prop in iface.GetProperties(flags))
+                foreach (var prop in interfaceType.GetProperties(flags))
                 {
                     if (!collectedPropertyNames.Contains(prop.Name) &&
-                        (!prop.GetMethod.IsAbstract || typeToReflect.IsInterface))
+                        (!prop.IsAbstract() || typeToReflect.IsInterface))
                     {
                         selectedProperties.Add(prop);
                         collectedPropertyNames.Add(prop.Name);
