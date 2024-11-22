@@ -523,6 +523,35 @@ internal static class PropertyInfoExtensions
         return prop.Name.Contains('.');
 #endif
     }
+
+    /// <summary>
+    /// Returns <c>true</c> if the property has a public getter or setter, or <c>false</c> otherwise.
+    /// </summary>
+    public static bool IsPublic(this PropertyInfo prop)
+    {
+        return prop.GetMethod?.IsPublic is true || prop.SetMethod?.IsPublic is true;
+    }
+
+    /// <summary>
+    /// Returns <c>true</c> if the property is internal, or <c>false</c> otherwise.
+    /// </summary>
+    /// <param name="prop">The property to check.</param>
+    public static bool IsInternal(this PropertyInfo prop)
+    {
+        return prop.GetMethod?.IsAssembly is true ||
+               prop.GetMethod?.IsFamilyOrAssembly is true ||
+               prop.SetMethod?.IsAssembly is true ||
+               prop.SetMethod?.IsFamilyOrAssembly is true;
+    }
+
+    /// <summary>
+    /// Returns <c>true</c> if the property is abstract, or <c>false</c> otherwise.
+    /// </summary>
+    /// <param name="prop">The property to check.</param>
+    public static bool IsAbstract(this PropertyInfo prop)
+    {
+        return prop.GetMethod?.IsAbstract is true || prop.SetMethod?.IsAbstract is true;
+    }
 }
 
 /// <summary>
