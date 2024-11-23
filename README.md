@@ -16,7 +16,7 @@
 
 Reflectify offers a bunch of extension methods to provide information such as the properties or fields a type exposes
 and metadata about those members, and many other details about classes, records and interfaces. It supports all major
-.NET versions and even understands explicltly implemented properties or properties coming from default interface
+.NET versions and even understands explicitly implemented properties or properties coming from default interface
 implementations, a C# 8 feature.
 
 ## What's so special about that?
