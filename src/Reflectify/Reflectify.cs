@@ -19,7 +19,7 @@ namespace Reflectify;
 internal static class TypeMetaDataExtensions
 {
     /// <summary>
-    /// Returns <c>true</c> if the type is derived from an open-generic type, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the type is derived from an open-generic type, or <see langword="false" /> otherwise.
     /// </summary>
     public static bool IsDerivedFromOpenGeneric(this Type type, Type openGenericType)
     {
@@ -62,8 +62,8 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type is decorated with the specific <typeparamref name="TAttribute"/>,
-    /// or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the type is decorated with the specific <typeparamref name="TAttribute"/>,
+    /// or <see langword="false" /> otherwise.
     /// </summary>
     public static bool HasAttribute<TAttribute>(this Type type)
         where TAttribute : Attribute
@@ -72,8 +72,8 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type is decorated with the specific <typeparamref name="TAttribute"/> <i>and</i>
-    /// that attribute instance matches the predicate, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the type is decorated with the specific <typeparamref name="TAttribute"/> <i>and</i>
+    /// that attribute instance matches the predicate, or <see langword="false" /> otherwise.
     /// </summary>
     public static bool HasAttribute<TAttribute>(this Type type, Func<TAttribute, bool> predicate)
         where TAttribute : Attribute
@@ -82,7 +82,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type or one its parents are decorated with the
+    /// Returns <see langword="true" /> if the type or one its parents are decorated with the
     /// specific <typeparamref name="TAttribute"/>.
     /// </summary>
     public static bool HasAttributeInHierarchy<TAttribute>(this Type type)
@@ -92,9 +92,9 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type or one its parents are decorated with the
+    /// Returns <see langword="true" /> if the type or one its parents are decorated with the
     /// specific <typeparamref name="TAttribute"/> <i>and</i> that attribute instance
-    /// matches the predicate. Returns <c>false</c> otherwise.
+    /// matches the predicate. Returns <see langword="false" /> otherwise.
     /// </summary>
     public static bool HasAttributeInHierarchy<TAttribute>(this Type type, Func<TAttribute, bool> predicate)
         where TAttribute : Attribute
@@ -135,7 +135,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type overrides the Equals method, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the type overrides the Equals method, or <see langword="false" /> otherwise.
     /// </summary>
     public static bool OverridesEquals(this Type type)
     {
@@ -152,7 +152,7 @@ internal static class TypeMetaDataExtensions
     /// <remarks>
     /// The expected type can also be an open generic type definition.
     /// </remarks>
-    /// <returns><c>true</c> if the actual type is the same as, or inherits from, the expected type; otherwise, <c>false</c>.</returns>
+    /// <returns><see langword="true" /> if the actual type is the same as, or inherits from, the expected type; otherwise, <see langword="false" />.</returns>
     public static bool IsSameOrInherits(this Type actualType, Type expectedType)
     {
         return actualType == expectedType ||
@@ -161,7 +161,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type is a compiler-generated type, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the type is a compiler-generated type, or <see langword="false" /> otherwise.
     /// </summary>
     /// <remarks>
     /// Typical examples of compiler-generated types are anonymous types, tuples, and records.
@@ -174,7 +174,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type has a readable name, or <c>false</c>
+    /// Returns <see langword="true" /> if the type has a readable name, or <see langword="false" />
     /// if it is a compiler-generated name.
     /// </summary>
     public static bool HasFriendlyName(this Type type)
@@ -183,7 +183,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Return <c>true</c> if the type is a tuple type; otherwise, <c>false</c>
+    /// Return <see langword="true" /> if the type is a tuple type; otherwise, <see langword="false" />
     /// </summary>
     public static bool IsTuple(this Type type)
     {
@@ -217,7 +217,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type is an anonymous type, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the type is an anonymous type, or <see langword="false" /> otherwise.
     /// </summary>
     public static bool IsAnonymous(this Type type)
     {
@@ -230,7 +230,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Return <c>true</c> if the type is a struct or class record type; otherwise, <c>false</c>.
+    /// Return <see langword="true" /> if the type is a struct or class record type; otherwise, <see langword="false" />.
     /// </summary>
     public static bool IsRecord(this Type type)
     {
@@ -238,7 +238,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the type is a class record type; otherwise, <c>false</c>.
+    /// Returns <see langword="true" /> if the type is a class record type; otherwise, <see langword="false" />.
     /// </summary>
     public static bool IsRecordClass(this Type type)
     {
@@ -248,7 +248,7 @@ internal static class TypeMetaDataExtensions
     }
 
     /// <summary>
-    /// Return <c>true</c> if the type is a record struct; otherwise, <c>false</c>
+    /// Return <see langword="true" /> if the type is a record struct; otherwise, <see langword="false" />
     /// </summary>
     public static bool IsRecordStruct(this Type type)
     {
@@ -267,7 +267,7 @@ internal static class TypeMetaDataExtensions
     /// Determines whether the specified type is a KeyValuePair.
     /// </summary>
     /// <param name="type">The type to check.</param>
-    /// <returns><c>true</c> if the type is a KeyValuePair; otherwise, <c>false</c>.</returns>
+    /// <returns><see langword="true" /> if the type is a KeyValuePair; otherwise, <see langword="false" />.</returns>
     public static bool IsKeyValuePair(this Type type)
     {
         return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>);
@@ -295,7 +295,7 @@ internal static class TypeMemberExtensions
     /// Normal property get priority over explicitly implemented properties and default interface properties.
     /// </remarks>
     /// <returns>
-    /// Returns <c>null</c> if no such property exists.
+    /// Returns <see langword="null" /> if no such property exists.
     /// </returns>
     public static PropertyInfo FindProperty(this Type type, string propertyName, MemberKind memberVisibility)
     {
@@ -324,7 +324,7 @@ internal static class TypeMemberExtensions
     /// Finds the field by a case-sensitive name.
     /// </summary>
     /// <returns>
-    /// Returns <c>null</c> if no such field exists.
+    /// Returns <see langword="null" /> if no such field exists.
     /// </returns>
     public static FieldInfo FindField(this Type type, string fieldName, MemberKind memberVisibility)
     {
@@ -355,7 +355,7 @@ internal static class TypeMemberExtensions
     }
 
     /// <summary>
-    /// Finds a method by its name, parameter types and visiblity. Returns <c>null</c> if no such method exists.
+    /// Finds a method by its name, parameter types and visiblity. Returns <see langword="null" /> if no such method exists.
     /// </summary>
     /// <remarks>
     /// If you don't specify any parameter types, the method will be found by its name only.
@@ -377,7 +377,7 @@ internal static class TypeMemberExtensions
     }
 
     /// <summary>
-    /// Finds a parameterless method by its name and visibility. Returns <c>null</c> if no such method exists.
+    /// Finds a parameterless method by its name and visibility. Returns <see langword="null" /> if no such method exists.
     /// </summary>
     public static MethodInfo FindParameterlessMethod(this Type type, string methodName, MemberKind memberKind)
     {
@@ -420,7 +420,7 @@ internal static class TypeMemberExtensions
 
     /// <summary>
     /// Finds an explicit conversion operator from the <paramref name="sourceType"/> to the <paramref name="targetType"/>.
-    /// Returns <c>null</c> if no such operator exists.
+    /// Returns <see langword="null" /> if no such operator exists.
     /// </summary>
     public static MethodInfo FindExplicitConversionOperator(this Type type, Type sourceType, Type targetType)
     {
@@ -431,7 +431,7 @@ internal static class TypeMemberExtensions
 
     /// <summary>
     /// Finds an implicit conversion operator from the <paramref name="sourceType"/> to the <paramref name="targetType"/>.
-    /// Returns <c>null</c> if no such operator exists.
+    /// Returns <see langword="null" /> if no such operator exists.
     /// </summary>
     public static MethodInfo FindImplicitConversionOperator(this Type type, Type sourceType, Type targetType)
     {
@@ -504,7 +504,7 @@ internal static class MemberInfoExtensions
 internal static class PropertyInfoExtensions
 {
     /// <summary>
-    /// Returns <c>true</c> if the property is an indexer, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the property is an indexer, or <see langword="false" /> otherwise.
     /// </summary>
     public static bool IsIndexer(this PropertyInfo member)
     {
@@ -512,8 +512,8 @@ internal static class PropertyInfoExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the property is explicitly implemented on the
-    /// <see cref="MemberInfo.DeclaringType"/>, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the property is explicitly implemented on the
+    /// <see cref="MemberInfo.DeclaringType"/>, or <see langword="false" /> otherwise.
     /// </summary>
     public static bool IsExplicitlyImplemented(this PropertyInfo prop)
     {
@@ -525,7 +525,7 @@ internal static class PropertyInfoExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the property has a public getter or setter, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the property has a public getter or setter, or <see langword="false" /> otherwise.
     /// </summary>
     public static bool IsPublic(this PropertyInfo prop)
     {
@@ -533,7 +533,7 @@ internal static class PropertyInfoExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the property is internal, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the property is internal, or <see langword="false" /> otherwise.
     /// </summary>
     /// <param name="prop">The property to check.</param>
     public static bool IsInternal(this PropertyInfo prop)
@@ -545,7 +545,7 @@ internal static class PropertyInfoExtensions
     }
 
     /// <summary>
-    /// Returns <c>true</c> if the property is abstract, or <c>false</c> otherwise.
+    /// Returns <see langword="true" /> if the property is abstract, or <see langword="false" /> otherwise.
     /// </summary>
     /// <param name="prop">The property to check.</param>
     public static bool IsAbstract(this PropertyInfo prop)
