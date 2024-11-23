@@ -635,11 +635,10 @@ internal sealed class Reflector
         {
             foreach (var property in allProperties)
             {
-                if (!collectedPropertyNames.Contains(property.Name) && !property.IsExplicitlyImplemented() &&
-                    HasVisibility(kind, property))
+                if (HasVisibility(kind, property) && !property.IsExplicitlyImplemented() &&
+                    collectedPropertyNames.Add(property.Name))
                 {
                     selectedProperties.Add(property);
-                    collectedPropertyNames.Add(property.Name);
                 }
             }
         }
@@ -661,10 +660,9 @@ internal sealed class Reflector
                 {
                     var name = p.Name.Split('.').Last();
 
-                    if (!collectedPropertyNames.Contains(name))
+                    if (collectedPropertyNames.Add(name))
                     {
                         selectedProperties.Add(p);
-                        collectedPropertyNames.Add(name);
                     }
                 }
             }
@@ -681,11 +679,10 @@ internal sealed class Reflector
             {
                 foreach (var prop in interfaceType.GetProperties(flags))
                 {
-                    if (!collectedPropertyNames.Contains(prop.Name) &&
-                        (!prop.IsAbstract() || typeToReflect.IsInterface))
+                    if ((!prop.IsAbstract() || typeToReflect.IsInterface) &&
+                        collectedPropertyNames.Add(prop.Name))
                     {
                         selectedProperties.Add(prop);
-                        collectedPropertyNames.Add(prop.Name);
                     }
                 }
             }
@@ -703,10 +700,9 @@ internal sealed class Reflector
 
             foreach (var field in files)
             {
-                if (!collectedFieldNames.Contains(field.Name) && HasVisibility(kind, field))
+                if (HasVisibility(kind, field) && collectedFieldNames.Add(field.Name))
                 {
                     selectedFields.Add(field);
-                    collectedFieldNames.Add(field.Name);
                 }
             }
 
