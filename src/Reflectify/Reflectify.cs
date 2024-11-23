@@ -311,7 +311,7 @@ internal static class TypeMemberExtensions
     }
 
     /// <summary>
-    /// Gets the public and/or internal fieldss of a type hierarchy.
+    /// Gets the public and/or internal fields of a type hierarchy.
     /// </summary>
     /// <param name="type">The type to reflect.</param>
     /// <param name="kind">The kind of fields to include in the response.</param>
@@ -355,7 +355,7 @@ internal static class TypeMemberExtensions
     }
 
     /// <summary>
-    /// Finds a method by its name, parameter types and visiblity. Returns <see langword="null" /> if no such method exists.
+    /// Finds a method by its name, parameter types and visibility. Returns <see langword="null" /> if no such method exists.
     /// </summary>
     /// <remarks>
     /// If you don't specify any parameter types, the method will be found by its name only.
