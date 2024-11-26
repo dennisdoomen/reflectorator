@@ -9,7 +9,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -475,29 +474,36 @@ internal static class TypeExtensions
 
 internal static class MemberInfoExtensions
 {
-    public static bool HasAttribute<TAttribute>(this MemberInfo type)
+    public static bool HasAttribute<TAttribute>(this MemberInfo member)
         where TAttribute : Attribute
     {
         // Do not use MemberInfo.IsDefined
         // There is an issue with PropertyInfo and EventInfo preventing the inherit option to work.
         // https://github.com/dotnet/runtime/issues/30219
-        return Attribute.IsDefined(type, typeof(TAttribute), inherit: false);
+        return Attribute.IsDefined(member, typeof(TAttribute), inherit: false);
     }
 
-    public static bool HasAttribute<TAttribute>(this MemberInfo type,
-        Expression<Func<TAttribute, bool>> isMatchingAttributePredicate)
+    /// <summary>
+    /// Determines whether the member has an attribute of the specified type that matches the predicate.
+    /// </summary>
+    public static bool HasAttribute<TAttribute>(this MemberInfo member, Func<TAttribute, bool> predicate)
         where TAttribute : Attribute
     {
-        return false;
+        if (predicate is null)
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
+
+        return member.GetCustomAttributes<TAttribute>().Any(a => predicate(a));
     }
 
-    public static bool HasAttributeInHierarchy<TAttribute>(this MemberInfo type)
+    public static bool HasAttributeInHierarchy<TAttribute>(this MemberInfo member)
         where TAttribute : Attribute
     {
         // Do not use MemberInfo.IsDefined
         // There is an issue with PropertyInfo and EventInfo preventing the inherit option to work.
         // https://github.com/dotnet/runtime/issues/30219
-        return Attribute.IsDefined(type, typeof(TAttribute), inherit: true);
+        return Attribute.IsDefined(member, typeof(TAttribute), inherit: true);
     }
 }
 
