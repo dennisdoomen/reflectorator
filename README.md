@@ -21,13 +21,13 @@ implementations, a C# 8 feature.
 
 ## What's so special about that?
 
-Nothing really, but it offers that functionality through a content-only NuGet package. In other words, you can use this
+Nothing really, but it offers that functionality through a content-only NuGet package that relies on C# 12. In other words, you can use this
 package in your own packages, without the need to tie yourself to the Reflectify package. Oh, and it's used
 by [an open-source project](https://fluentassertions.com/) with over 400 million downloads.
 
 ## How do I use it?
 
-Simple, to get the properties of a type, add the `Reflectify` NuGet package and use
+Simple, to get the properties of a type, add the `Reflectify` NuGet package to a project that targets at least C# 12 and use
 
 ```csharp
 using Reflectify;
