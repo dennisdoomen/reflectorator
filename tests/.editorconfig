@@ -4,6 +4,14 @@
 # Reason: We don't care about this in tests
 dotnet_diagnostic.CA1034.severity = none
 
+# Purpose: Specify StringComparison for clarity
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1307.severity = none
+
+# Purpose: The behavior of 'string. StartsWith(string)' could vary based on the current user's locale settings
+# Reason: We don't care about this in tests
+dotnet_diagnostic.CA1310.severity = none
+
 # Purpose: Type is a static holder type but is neither static nor NotInheritable
 # Reason: We don't care about this in tests
 dotnet_diagnostic.CA1052.severity = none
@@ -47,6 +55,10 @@ dotnet_diagnostic.AV1010.severity = none
 # Purpose: Parameter 'flag' is of type 'bool
 # Reason: Not needed for tests
 dotnet_diagnostic.AV1564.severity = none
+
+# Purpose: Use an overload of 'StartsWith' that has a StringComparison parameter
+# Reason: Duplicate of CA1310
+dotnet_diagnostic.MA0074.severity = none
 
 # Purpose: Class is never instantiated (non-private accessibility)
 # Reason: We don't instantiate test classes directly
