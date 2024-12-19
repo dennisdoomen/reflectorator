@@ -156,7 +156,7 @@ internal static class TypeMetaDataExtensions
     {
         return actualType == expectedType ||
                expectedType.IsAssignableFrom(actualType) ||
-               (actualType.BaseType?.IsGenericType is true && actualType.BaseType?.GetGenericTypeDefinition() == expectedType);
+               (actualType.BaseType is { IsGenericType: true } && actualType.BaseType.GetGenericTypeDefinition() == expectedType);
     }
 
     /// <summary>
@@ -535,7 +535,7 @@ internal static class PropertyInfoExtensions
     /// </summary>
     public static bool IsPublic(this PropertyInfo prop)
     {
-        return prop.GetMethod?.IsPublic is true || prop.SetMethod?.IsPublic is true;
+        return prop.GetMethod is { IsPublic: true } || prop.SetMethod is { IsPublic: true };
     }
 
     /// <summary>
@@ -544,10 +544,8 @@ internal static class PropertyInfoExtensions
     /// <param name="prop">The property to check.</param>
     public static bool IsInternal(this PropertyInfo prop)
     {
-        return prop.GetMethod?.IsAssembly is true ||
-               prop.GetMethod?.IsFamilyOrAssembly is true ||
-               prop.SetMethod?.IsAssembly is true ||
-               prop.SetMethod?.IsFamilyOrAssembly is true;
+        return prop.GetMethod is { IsAssembly: true } or { IsFamilyOrAssembly: true } ||
+               prop.SetMethod is { IsAssembly: true } or { IsFamilyOrAssembly: true };
     }
 
     /// <summary>
@@ -556,7 +554,7 @@ internal static class PropertyInfoExtensions
     /// <param name="prop">The property to check.</param>
     public static bool IsAbstract(this PropertyInfo prop)
     {
-        return prop.GetMethod?.IsAbstract is true || prop.SetMethod?.IsAbstract is true;
+        return prop.GetMethod is { IsAbstract: true } || prop.SetMethod is { IsAbstract: true };
     }
 }
 
