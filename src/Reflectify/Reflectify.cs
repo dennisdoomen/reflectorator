@@ -67,7 +67,7 @@ internal static class TypeMetaDataExtensions
     public static bool HasAttribute<TAttribute>(this Type type)
         where TAttribute : Attribute
     {
-        return type.HasAttribute<TAttribute>(_ => true);
+        return type.GetCustomAttributes<TAttribute>(inherit: false).Any();
     }
 
     /// <summary>
@@ -77,7 +77,12 @@ internal static class TypeMetaDataExtensions
     public static bool HasAttribute<TAttribute>(this Type type, Func<TAttribute, bool> predicate)
         where TAttribute : Attribute
     {
-        return GetCustomAttributes(type, predicate).Any();
+        if (predicate is null)
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
+
+        return type.GetCustomAttributes<TAttribute>(inherit: false).Any(predicate);
     }
 
     /// <summary>
@@ -87,7 +92,7 @@ internal static class TypeMetaDataExtensions
     public static bool HasAttributeInHierarchy<TAttribute>(this Type type)
         where TAttribute : Attribute
     {
-        return GetCustomAttributes<TAttribute>(type, _ => true, inherit: true).Any();
+        return type.GetCustomAttributes<TAttribute>(inherit: true).Any();
     }
 
     /// <summary>
@@ -98,7 +103,12 @@ internal static class TypeMetaDataExtensions
     public static bool HasAttributeInHierarchy<TAttribute>(this Type type, Func<TAttribute, bool> predicate)
         where TAttribute : Attribute
     {
-        return GetCustomAttributes(type, predicate, inherit: true).Any();
+        if (predicate is null)
+        {
+            throw new ArgumentNullException(nameof(predicate));
+        }
+
+        return type.GetCustomAttributes<TAttribute>(inherit: true).Any(predicate);
     }
 
     /// <summary>
@@ -107,7 +117,7 @@ internal static class TypeMetaDataExtensions
     public static TAttribute[] GetMatchingAttributes<TAttribute>(this Type type)
         where TAttribute : Attribute
     {
-        return GetCustomAttributes<TAttribute>(type, _ => true, true);
+        return (TAttribute[])type.GetCustomAttributes<TAttribute>(inherit: true);
     }
 
     /// <summary>
@@ -116,21 +126,12 @@ internal static class TypeMetaDataExtensions
     public static TAttribute[] GetMatchingAttributes<TAttribute>(this Type type, Func<TAttribute, bool> predicate)
         where TAttribute : Attribute
     {
-        return GetCustomAttributes(type, predicate, true);
-    }
-
-    private static TAttribute[] GetCustomAttributes<TAttribute>(
-        Type type, Func<TAttribute, bool> predicate, bool inherit = false)
-        where TAttribute : Attribute
-    {
         if (predicate is null)
         {
             throw new ArgumentNullException(nameof(predicate));
         }
 
-        return type.GetCustomAttributes(typeof(TAttribute), inherit)
-            .OfType<TAttribute>()
-            .Where(predicate).ToArray();
+        return type.GetCustomAttributes<TAttribute>(inherit: true).Where(predicate).ToArray();
     }
 
     /// <summary>
@@ -156,7 +157,7 @@ internal static class TypeMetaDataExtensions
     {
         return actualType == expectedType ||
                expectedType.IsAssignableFrom(actualType) ||
-               (actualType.BaseType?.IsGenericType is true && actualType.BaseType?.GetGenericTypeDefinition() == expectedType);
+               (actualType.BaseType is { IsGenericType: true } && actualType.BaseType.GetGenericTypeDefinition() == expectedType);
     }
 
     /// <summary>
@@ -535,7 +536,7 @@ internal static class PropertyInfoExtensions
     /// </summary>
     public static bool IsPublic(this PropertyInfo prop)
     {
-        return prop.GetMethod?.IsPublic is true || prop.SetMethod?.IsPublic is true;
+        return prop.GetMethod is { IsPublic: true } || prop.SetMethod is { IsPublic: true };
     }
 
     /// <summary>
@@ -544,10 +545,8 @@ internal static class PropertyInfoExtensions
     /// <param name="prop">The property to check.</param>
     public static bool IsInternal(this PropertyInfo prop)
     {
-        return prop.GetMethod?.IsAssembly is true ||
-               prop.GetMethod?.IsFamilyOrAssembly is true ||
-               prop.SetMethod?.IsAssembly is true ||
-               prop.SetMethod?.IsFamilyOrAssembly is true;
+        return prop.GetMethod is { IsAssembly: true } or { IsFamilyOrAssembly: true } ||
+               prop.SetMethod is { IsAssembly: true } or { IsFamilyOrAssembly: true };
     }
 
     /// <summary>
@@ -556,7 +555,7 @@ internal static class PropertyInfoExtensions
     /// <param name="prop">The property to check.</param>
     public static bool IsAbstract(this PropertyInfo prop)
     {
-        return prop.GetMethod?.IsAbstract is true || prop.SetMethod?.IsAbstract is true;
+        return prop.GetMethod is { IsAbstract: true } || prop.SetMethod is { IsAbstract: true };
     }
 }
 
